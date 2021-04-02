@@ -1,34 +1,39 @@
-# remark-squeeze-links
+# remark-fix-relative-uris
 
-[**remark**][remark] plugin to remove empty (or whitespace only) links.
+[**remark**][remark] plugin to resolve relative URIs.
 
 ## Install
 
 [npm][]:
 
 ```sh
-npm install remark-squeeze-links
+npm install remark-fix-relative-uris
 ```
 
 ## Use
 
 ```js
 var remark = require('remark')
-var squeezeLinks = require('remark-squeeze-links')
+var fixRelativeUris = require('remark-fix-relative-uris')
 
-remark().use(squeezeLinks).processSync('[](#about)\ntext').toString()
-// => "text\n"
+remark()
+  .use(fixRelativeUris, {baseURI: 'https://www.craftz.dog/'})
+  .processSync('[About](/about)\n')
+  .toString()
+// => "[About](https://www.craftz.dog/about)\n"
 ```
 
 ## API
 
-### `remark().use(squeezeLinks)`
+### `remark().use(fixRelativeUris, args)`
 
-Remove empty (or white-space only) links.
+Resolve relative URIs.
+
+- `args.baseURI` — The base URI to append
 
 ## Related
 
-- [`mdast-squeeze-links`][mdast-squeeze-links]
+- [`mdast-util-fix-relative-uris`][mdast-util-fix-relative-uris]
   — [**mdast**][mdast] utility that is in the core of this plugin
 
 ## Contribute
@@ -54,5 +59,5 @@ abide by its terms.
 [author]: https://www.craftz.dog/
 [remark]: https://github.com/remarkjs/remark
 [mdast]: https://github.com/syntax-tree/mdast
-[mdast-squeeze-links]: https://github.com/syntax-tree/mdast-squeeze-links
+[mdast-util-fix-relative-uris]: https://github.com/inkdropapp/mdast-util-fix-relative-uris
 [hast]: https://github.com/syntax-tree/hast
